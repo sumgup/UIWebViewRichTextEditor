@@ -6,7 +6,7 @@
     <ProjectGuid>{6B463CC4-6A51-474B-A181-0D7E29DCE578}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>UIWebViewRichTextEditot</RootNamespace>
+    <RootNamespace>UIWebViewRichTextEditor</RootNamespace>
     <AssemblyName>UIWebViewRichTextEditot</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
@@ -96,10 +96,16 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\gl_acs%401x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\gl_acs%402x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\gl_acs%403x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\gl_msabc%401x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Content\" />
+    <Folder Include="Assets.xcassets\Logo.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -116,6 +122,7 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="RTEGestureRecognizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Index.html" />

@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace UIWebViewRichTextEditot
+namespace UIWebViewRichTextEditor
 {
 	public class Application
 	{

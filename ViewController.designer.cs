@@ -9,7 +9,7 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace UIWebViewRichTextEditot
+namespace UIWebViewRichTextEditor
 {
     [Register ("ViewController")]
     partial class ViewController
@@ -24,7 +24,15 @@ namespace UIWebViewRichTextEditot
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView imageView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIWebView webView { get; set; }
+
+        [Action ("BtnBold_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void BtnBold_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -36,6 +44,11 @@ namespace UIWebViewRichTextEditot
             if (btnItalic != null) {
                 btnItalic.Dispose ();
                 btnItalic = null;
+            }
+
+            if (imageView != null) {
+                imageView.Dispose ();
+                imageView = null;
             }
 
             if (webView != null) {
