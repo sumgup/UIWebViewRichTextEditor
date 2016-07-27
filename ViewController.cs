@@ -39,12 +39,11 @@ namespace UIWebViewRichTextEditor
 			LoadHtmlToRichText();
 			CheckSelection();
 
-			timer = new Timer(1000);
+			timer = new Timer(500);
 			timer.Elapsed += OnTimerElasped;
 			timer.Start();
 
 			AddGesturesToRichTextBox();
-
 
 		}
 
@@ -69,14 +68,17 @@ namespace UIWebViewRichTextEditor
 			{
 				InvokeOnMainThread(() =>
 				{
+
 					var boldEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('bold')"));
 					var italicEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('italic')"));
 
 					var listOfButtons = new List<UIBarButtonItem>();
 
-					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain, (sender, args) =>
+					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain,(sender, args) =>
 					{
-						SetBold();
+						var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
+						var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
+						Console.WriteLine(htmlCode);
 					});
 
 					btnBold.SetTitle(boldEnabled ? "[B]" : "B", UIControlState.Normal);
@@ -99,6 +101,8 @@ namespace UIWebViewRichTextEditor
 
 					this.NavigationItem.LeftBarButtonItems = listOfButtons.ToArray();
 
+					listOfButtons.Clear();
+
 				});
 
 
@@ -111,6 +115,40 @@ namespace UIWebViewRichTextEditor
 
 
 		}
+
+
+		private void SetBold()
+		{ 
+			var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
+			var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
+			Console.WriteLine(htmlCode);
+		}
+
+
+		partial void BtnBold_TouchUpInside(UIButton sender)
+		{
+			SetBold();
+
+		}
+
+		public override void DidReceiveMemoryWarning()
+		{
+			base.DidReceiveMemoryWarning();
+			// Release any cached data, images, etc that aren't in use.
+		}
+
+		private void LoadHtmlToRichText()
+		{
+			string contentDirectoryPath = Path.Combine(NSBundle.MainBundle.BundlePath, "Content/");
+
+			string fileName = "Content/Index.html"; // remember case-sensitive
+			string localHtmlUrl = Path.Combine(NSBundle.MainBundle.BundlePath, fileName);
+			Html = File.ReadAllText(Path.Combine(NSBundle.MainBundle.BundlePath, fileName));
+
+			webView.LoadHtmlString(Html,new NSUrl(contentDirectoryPath, true));
+			webView.ScalesPageToFit = false;
+		}
+
 
 		void AddGesturesToRichTextBox()
 		{
@@ -137,50 +175,6 @@ namespace UIWebViewRichTextEditor
 			};
 
 			webView.ScrollView.AddGestureRecognizer(rteGestureRecognizer);
-		}
-
-		private void SetBold()
-		{ 
-			webView.EvaluateJavascript(@"document.execCommand(""Bold"")");
-			var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
-			Console.WriteLine(htmlCode);
-		}
-
-
-		partial void BtnBold_TouchUpInside(UIButton sender)
-		{
-			SetBold();
-			//[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand(\"Bold\")"];
-
-
-
-			//var result = this.webView.EvaluateJavascript(@"document.execCommand(""Bold"")");
-
-
-			//webView.LoadHtmlString(html, new NSUrl(contentDirectoryPath, true));
-
-			//var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
-
-			//var s = "fd";
-
-		}
-
-		public override void DidReceiveMemoryWarning()
-		{
-			base.DidReceiveMemoryWarning();
-			// Release any cached data, images, etc that aren't in use.
-		}
-
-		private void LoadHtmlToRichText()
-		{
-			string contentDirectoryPath = Path.Combine(NSBundle.MainBundle.BundlePath, "Content/");
-
-			string fileName = "Content/Index.html"; // remember case-sensitive
-			string localHtmlUrl = Path.Combine(NSBundle.MainBundle.BundlePath, fileName);
-			Html = File.ReadAllText(Path.Combine(NSBundle.MainBundle.BundlePath, fileName));
-
-			webView.LoadHtmlString(Html,new NSUrl(contentDirectoryPath, true));
-			webView.ScalesPageToFit = false;
 		}
 	}
 }
