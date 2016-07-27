@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Timers;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
@@ -11,6 +12,7 @@ namespace UIWebViewRichTextEditor
 	public partial class ViewController : UIViewController
 	{
 		String Html;
+		Timer timer;
 
 		public Boolean CurrentBoldStatus
 		{
@@ -35,10 +37,83 @@ namespace UIWebViewRichTextEditor
 			base.ViewDidLoad();
 			// Perform any additional setup after loading the view, typically from a nib.
 			LoadHtmlToRichText();
-
 			CheckSelection();
 
+			timer = new Timer(1000);
+			timer.Elapsed += OnTimerElasped;
+			timer.Start();
 
+			AddGesturesToRichTextBox();
+
+
+		}
+
+		public override void ViewDidUnload()
+		{
+			base.ViewDidUnload();
+			if (timer != null)
+			{
+				timer.Elapsed -= OnTimerElasped;
+				timer.Stop();
+			}
+		}
+
+		void OnTimerElasped(object o, EventArgs e)
+		{
+			CheckSelection();
+		}
+
+		private void CheckSelection()
+		{
+			try
+			{
+				InvokeOnMainThread(() =>
+				{
+					var boldEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('bold')"));
+					var italicEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('italic')"));
+
+					var listOfButtons = new List<UIBarButtonItem>();
+
+					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain, (sender, args) =>
+					{
+						SetBold();
+					});
+
+					btnBold.SetTitle(boldEnabled ? "[B]" : "B", UIControlState.Normal);
+					btnItalic.SetTitle(boldEnabled ? "[I]" : "I", UIControlState.Normal);
+
+					listOfButtons.Add(boldUIBarButtonItem);
+
+
+					/*
+						We add the bar button items to the array and then if there are any changes to the status of bold,
+						italic or underline since we last checked or if this is the first time then we set that array 
+						as the navigation items right bar button items and update the statuses.
+					 */
+
+					if (CurrentBoldStatus != boldEnabled || CurrentItalicStatus != italicEnabled)
+					{
+						CurrentBoldStatus = boldEnabled;
+						CurrentItalicStatus = italicEnabled;
+					}
+
+					this.NavigationItem.LeftBarButtonItems = listOfButtons.ToArray();
+
+				});
+
+
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message + " " + ex.StackTrace);
+			}
+
+
+
+		}
+
+		void AddGesturesToRichTextBox()
+		{
 			var rteGestureRecognizer = new RTEGestureRecognizer();
 
 			// NSSet *touches, UIEvent *event
@@ -63,41 +138,18 @@ namespace UIWebViewRichTextEditor
 
 			webView.ScrollView.AddGestureRecognizer(rteGestureRecognizer);
 		}
-				
 
-		private void CheckSelection()
-		{
-			var boldEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('bold')"));
-			var italicEnabled = Convert.ToBoolean(webView.EvaluateJavascript(@"document.queryCommandState('italic')"));
-
-			var listOfButtons = new List<UIButton>();
-
-
-			btnBold.SetTitle(boldEnabled ? "[B]" : "B", UIControlState.Normal);
-			btnItalic.SetTitle(boldEnabled ? "[I]" : "I", UIControlState.Normal);
-
-			listOfButtons.Add(btnBold);
-			listOfButtons.Add(btnItalic);
-
-			/*
-   				We add the bar button items to the array and then if there are any changes to the status of bold,
-   				italic or underline since we last checked or if this is the first time then we set that array 
-   				as the navigation items right bar button items and update the statuses.
-  			 */
-
-			if (CurrentBoldStatus != boldEnabled || CurrentItalicStatus != italicEnabled)
-			{
-				CurrentBoldStatus = boldEnabled;
-				CurrentItalicStatus = italicEnabled;
-			}
-
+		private void SetBold()
+		{ 
+			webView.EvaluateJavascript(@"document.execCommand(""Bold"")");
+			var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
+			Console.WriteLine(htmlCode);
 		}
-
 
 
 		partial void BtnBold_TouchUpInside(UIButton sender)
 		{
-
+			SetBold();
 			//[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand(\"Bold\")"];
 
 

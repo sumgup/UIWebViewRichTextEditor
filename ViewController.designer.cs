@@ -24,10 +24,6 @@ namespace UIWebViewRichTextEditor
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView imageView { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIWebView webView { get; set; }
 
         [Action ("BtnBold_TouchUpInside:")]
@@ -44,11 +40,6 @@ namespace UIWebViewRichTextEditor
             if (btnItalic != null) {
                 btnItalic.Dispose ();
                 btnItalic = null;
-            }
-
-            if (imageView != null) {
-                imageView.Dispose ();
-                imageView = null;
             }
 
             if (webView != null) {

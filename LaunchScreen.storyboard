@@ -24,4 +24,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Logo" width="164" height="66"/>
+    </resources>
 </document>
