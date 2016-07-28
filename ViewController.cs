@@ -76,14 +76,21 @@ namespace UIWebViewRichTextEditor
 						 webView.Bold();
 					 });
 
-					var italicBarButtonItem = new UIBarButtonItem(boldEnabled ? "[I]" : "I", UIBarButtonItemStyle.Plain, (sender, args) =>
+					var italicBarButtonItem = new UIBarButtonItem(italicEnabled ? "[I]" : "I", UIBarButtonItemStyle.Plain, (sender, args) =>
 					 {
 						webView.Italic();
+					 });
+
+					var paragraphBarButtonItem = new UIBarButtonItem("P", UIBarButtonItemStyle.Plain, (sender, args) =>
+					 {
+						 webView.Paragraph();
 					 });
 
 
 					listOfButtons.Add(boldUIBarButtonItem);
 					listOfButtons.Add(italicBarButtonItem);
+					listOfButtons.Add(paragraphBarButtonItem);
+
 
 					/*
 						We add the bar button items to the array and then if there are any changes to the status of bold,
@@ -110,9 +117,6 @@ namespace UIWebViewRichTextEditor
 				Console.WriteLine(ex.Message + " " + ex.StackTrace);
 			}
 		}
-
-
-
 
 
 

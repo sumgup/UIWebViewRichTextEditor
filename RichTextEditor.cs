@@ -23,6 +23,7 @@ namespace UIWebViewRichTextEditor
 		public void Bold()
 		{
 			this.EvaluateJavascript(@"javascript:RE.setBold();");
+			Console.WriteLine(this.EvaluateJavascript(@"document.body.innerHTML"));
 		}
 	
 		public void Italic()
