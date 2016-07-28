@@ -35,7 +35,6 @@ namespace UIWebViewRichTextEditor
 		{
 			base.ViewDidLoad();
 			// Perform any additional setup after loading the view, typically from a nib.
-			LoadHtmlToRichText();
 			CheckSelection();
 
 			timer = new Timer(500);
@@ -125,18 +124,6 @@ namespace UIWebViewRichTextEditor
 		{
 			base.DidReceiveMemoryWarning();
 			// Release any cached data, images, etc that aren't in use.
-		}
-
-		private void LoadHtmlToRichText()
-		{
-			string contentDirectoryPath = Path.Combine(NSBundle.MainBundle.BundlePath, "Content/");
-
-			string fileName = "Content/Index.html"; // remember case-sensitive
-			string localHtmlUrl = Path.Combine(NSBundle.MainBundle.BundlePath, fileName);
-			Html = File.ReadAllText(Path.Combine(NSBundle.MainBundle.BundlePath, fileName));
-
-			webView.LoadHtmlString(Html,new NSUrl(contentDirectoryPath, true));
-			webView.ScalesPageToFit = false;
 		}
 
 	}

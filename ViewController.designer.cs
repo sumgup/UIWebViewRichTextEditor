@@ -24,7 +24,7 @@ namespace UIWebViewRichTextEditor
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIWebView webView { get; set; }
+        UIWebViewRichTextEditor.RichTextEditor webView { get; set; }
 
         [Action ("BtnBold_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
