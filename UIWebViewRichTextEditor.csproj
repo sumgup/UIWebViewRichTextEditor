@@ -129,6 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Index.html" />
+    <BundleResource Include="Content\normalize.css" />
+    <BundleResource Include="Content\rich_editor.js" />
+    <BundleResource Include="Content\style.css" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

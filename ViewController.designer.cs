@@ -16,32 +16,10 @@ namespace UIWebViewRichTextEditor
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton btnBold { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton btnItalic { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIWebViewRichTextEditor.RichTextEditor webView { get; set; }
-
-        [Action ("BtnBold_TouchUpInside:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void BtnBold_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
-            if (btnBold != null) {
-                btnBold.Dispose ();
-                btnBold = null;
-            }
-
-            if (btnItalic != null) {
-                btnItalic.Dispose ();
-                btnItalic = null;
-            }
-
             if (webView != null) {
                 webView.Dispose ();
                 webView = null;

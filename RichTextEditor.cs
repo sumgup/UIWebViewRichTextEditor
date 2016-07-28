@@ -20,5 +20,19 @@ namespace UIWebViewRichTextEditor
 			base.LoadHtmlString(html, new NSUrl(contentDirectoryPath, true));
 		}
 
+		public void Bold()
+		{
+			this.EvaluateJavascript(@"javascript:RE.setBold();");
+		}
+	
+		public void Italic()
+		{
+			this.EvaluateJavascript(@"javascript:RE.setItalic();");
+		}
+
+		public void Paragraph()
+		{
+			this.EvaluateJavascript("javascript:RE.setParagraph();");
+		}
     }
 }

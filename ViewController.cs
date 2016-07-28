@@ -11,6 +11,8 @@ namespace UIWebViewRichTextEditor
 	
 	public partial class ViewController : UIViewController
 	{
+		// 	var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
+
 		String Html;
 		Timer timer;
 
@@ -71,16 +73,17 @@ namespace UIWebViewRichTextEditor
 
 					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain, (sender, args) =>
 					 {
-						 var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
-						 var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
-						 Console.WriteLine(htmlCode);
+						 webView.Bold();
 					 });
 
-					btnBold.SetTitle(boldEnabled ? "[B]" : "B", UIControlState.Normal);
-					btnItalic.SetTitle(boldEnabled ? "[I]" : "I", UIControlState.Normal);
+					var italicBarButtonItem = new UIBarButtonItem(boldEnabled ? "[I]" : "I", UIBarButtonItemStyle.Plain, (sender, args) =>
+					 {
+						webView.Italic();
+					 });
+
 
 					listOfButtons.Add(boldUIBarButtonItem);
-
+					listOfButtons.Add(italicBarButtonItem);
 
 					/*
 						We add the bar button items to the array and then if there are any changes to the status of bold,
@@ -108,17 +111,10 @@ namespace UIWebViewRichTextEditor
 			}
 		}
 
-		private void SetBold()
-		{
-			var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
-			var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
-			Console.WriteLine(htmlCode);
-		}
 
-		partial void BtnBold_TouchUpInside(UIButton sender)
-		{
-			SetBold();
-		}
+
+
+
 
 		public override void DidReceiveMemoryWarning()
 		{
