@@ -26,7 +26,6 @@ namespace UIWebViewRichTextEditor
 			set;
 		}
 	
-
 		protected ViewController(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -42,9 +41,6 @@ namespace UIWebViewRichTextEditor
 			timer = new Timer(500);
 			timer.Elapsed += OnTimerElasped;
 			timer.Start();
-
-			AddGesturesToRichTextBox();
-
 		}
 
 		public override void ViewDidUnload()
@@ -74,12 +70,12 @@ namespace UIWebViewRichTextEditor
 
 					var listOfButtons = new List<UIBarButtonItem>();
 
-					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain,(sender, args) =>
-					{
-						var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
-						var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
-						Console.WriteLine(htmlCode);
-					});
+					var boldUIBarButtonItem = new UIBarButtonItem(boldEnabled ? "[B]" : "B", UIBarButtonItemStyle.Plain, (sender, args) =>
+					 {
+						 var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
+						 var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
+						 Console.WriteLine(htmlCode);
+					 });
 
 					btnBold.SetTitle(boldEnabled ? "[B]" : "B", UIControlState.Normal);
 					btnItalic.SetTitle(boldEnabled ? "[I]" : "I", UIControlState.Normal);
@@ -111,24 +107,18 @@ namespace UIWebViewRichTextEditor
 			{
 				Console.WriteLine(ex.Message + " " + ex.StackTrace);
 			}
-
-
-
 		}
 
-
 		private void SetBold()
-		{ 
+		{
 			var result = webView.EvaluateJavascript(@"document.execCommand('bold')");
 			var htmlCode = webView.EvaluateJavascript(@"document.body.innerHTML");
 			Console.WriteLine(htmlCode);
 		}
 
-
 		partial void BtnBold_TouchUpInside(UIButton sender)
 		{
 			SetBold();
-
 		}
 
 		public override void DidReceiveMemoryWarning()
@@ -149,33 +139,6 @@ namespace UIWebViewRichTextEditor
 			webView.ScalesPageToFit = false;
 		}
 
-
-		void AddGesturesToRichTextBox()
-		{
-			var rteGestureRecognizer = new RTEGestureRecognizer();
-
-			// NSSet *touches, UIEvent *event
-			rteGestureRecognizer.TouchesDidBegin += (touches, evt) =>
-			{
-				var uiTouch = evt.touches.AnyObject as UITouch;
-				var touchPoint = ((RTEGestureRecognizer)touches).LocationInView(this.View);
-
-				var javascript = string.Format(@"document.elementFromPoint({0},{1})", touchPoint.X, touchPoint.Y);
-				var elementAtPoint = webView.EvaluateJavascript(javascript);
-
-
-				Console.WriteLine(elementAtPoint);
-				System.Diagnostics.Trace.WriteLine("Element:" + elementAtPoint);
-			};
-
-			rteGestureRecognizer.TouchesDidEnd += (touches, evt) =>
-			{
-				var uiTouch = evt.touches.AnyObject as UITouch;
-				var touchPoint = ((RTEGestureRecognizer)touches).LocationInView(this.View);
-			};
-
-			webView.ScrollView.AddGestureRecognizer(rteGestureRecognizer);
-		}
 	}
 }
 

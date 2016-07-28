@@ -122,7 +122,6 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="RTEGestureRecognizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Index.html" />
