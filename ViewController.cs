@@ -86,10 +86,16 @@ namespace UIWebViewRichTextEditor
 						 webView.Paragraph();
 					 });
 
+					var orderedListButtonItem = new UIBarButtonItem("OL", UIBarButtonItemStyle.Plain, (sender, args) =>
+					 {
+						webView.OrderedList();
+					 });
+
 
 					listOfButtons.Add(boldUIBarButtonItem);
 					listOfButtons.Add(italicBarButtonItem);
 					listOfButtons.Add(paragraphBarButtonItem);
+					listOfButtons.Add(orderedListButtonItem);
 
 
 					/*

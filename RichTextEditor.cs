@@ -35,5 +35,12 @@ namespace UIWebViewRichTextEditor
 		{
 			this.EvaluateJavascript("javascript:RE.setParagraph();");
 		}
+
+		public void OrderedList()
+		{
+			this.EvaluateJavascript("javascript:RE.setNumbers();");
+		}
+
+
     }
 }
