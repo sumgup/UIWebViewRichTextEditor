@@ -91,11 +91,19 @@ namespace UIWebViewRichTextEditor
 						webView.OrderedList();
 					 });
 
+					var blockQuoteButtonItem = new UIBarButtonItem("BQ", UIBarButtonItemStyle.Plain, (sender, args) =>
+					 {
+						 webView.BlockQuote();
+					 });
+
+
 
 					listOfButtons.Add(boldUIBarButtonItem);
 					listOfButtons.Add(italicBarButtonItem);
 					listOfButtons.Add(paragraphBarButtonItem);
 					listOfButtons.Add(orderedListButtonItem);
+					listOfButtons.Add(blockQuoteButtonItem);
+
 
 
 					/*

@@ -41,6 +41,12 @@ namespace UIWebViewRichTextEditor
 			this.EvaluateJavascript("javascript:RE.setNumbers();");
 		}
 
+		public void BlockQuote()
+		{
+			this.EvaluateJavascript("javascript:RE.setBlockquote();");
+
+		}
+
 
     }
 }
